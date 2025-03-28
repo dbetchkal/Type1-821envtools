@@ -6,13 +6,21 @@
 - Open G4 LD Utility software.<br>
 - Connect LD 821 to your computer using a micro USB.<br>
 - In the left margin of G4 Utility, select your LD 821 (identified by SN or user-specified name).<br>
-- In the main window, select the most recent file.<br>
-- Once downloaded, double-click the file to open it as a tab in the main window.<br>
-- Select `File > Export to csv`. A window will appear to show where it is saved.<br>
+- In the main window, select![image](https://github.com/user-attachments/assets/69d4c100-6ade-41fc-8374-c7a982e03ac1)
+- Select  the most recent file![image](https://github.com/user-attachments/assets/122995bd-b741-4ebf-9528-68912d440fb4)
+ and download ![image](https://github.com/user-attachments/assets/3ad9c0a5-7347-4070-a8cc-f8db4508f421)
+
+<br>
+- Once downloaded, double-click the file to open it as a tab in the main window.![image](https://github.com/user-attachments/assets/86c6be4d-e0f0-4abe-a53e-62415b9b67b7)
+<br>
+- Select `File > Export to csv`. A window will appear to show where it is saved.![image](https://github.com/user-attachments/assets/9bd4753f-ff86-45ba-b10f-a14ae58b5467)
+<br>
 - Navigate to this location and move the file with the `_Time History.csv` suffix to your SPL folder created in step 1.<br>
 
 ### TEMP FIX for AMT ISSUE:
 - If you deployed at an hour with two digits (e.g., 10, 11, 12), replace the recorded hour with `0:00:00` at the very first time step.<br>
+![image](https://github.com/user-attachments/assets/78a2febf-2687-48d3-b1ec-14f9e69811f0)<br>
+
 
 ### Combine SPL Time History Files:
 - Use `Type1-821envtools` in either R or Python:<br>
@@ -51,6 +59,8 @@
 - In your deployment folder, create:<br>
   - A `MET` folder.<br>
   - An `SPL` folder, and inside it, create another folder named `NVSPL`. <br>
+  ![image](https://github.com/user-attachments/assets/d65f7c13-ceb8-4c85-80f4-a7909361f08a) <br>
+
 
 ## 4. Create NVSPL Files in AMT
 
