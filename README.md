@@ -1,5 +1,5 @@
 # Instructions for Data Processing
-
+#### NSNSD Users: Download 'SampleData' from sharepoint software and scripts location to run through each process
 ## 1. Download LD SPL Data
 
 ### Steps to Download:
