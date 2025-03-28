@@ -6,7 +6,8 @@
 - Open G4 LD Utility software.<br>
 - Connect LD 821 to your computer using a micro USB.<br>
 - In the left margin of G4 Utility, select your LD 821 (identified by SN or user-specified name).<br>
-- In the main window, select![image](https://github.com/user-attachments/assets/69d4c100-6ade-41fc-8374-c7a982e03ac1) <br>
+- In the main window, select![image](https://github.com/user-attachments/assets/a33079b2-b72e-404a-a08b-c92e8bb3b246)
+ <br>
 - Select  the most recent file![image](https://github.com/user-attachments/assets/122995bd-b741-4ebf-9528-68912d440fb4) <br>
  and download ![image](https://github.com/user-attachments/assets/3ad9c0a5-7347-4070-a8cc-f8db4508f421) <br>
 - Once downloaded, double-click the file to open it as a tab in the main window.![image](https://github.com/user-attachments/assets/86c6be4d-e0f0-4abe-a53e-62415b9b67b7) <br>
