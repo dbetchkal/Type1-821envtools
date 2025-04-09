@@ -1,71 +1,86 @@
 import os
 import pandas as pd
-from tkinter import filedialog, Tk
+import tkinter as tk
+from tkinter import filedialog
 from datetime import datetime
-import numpy as np
 
-# Clear the workspace equivalent (in Python, we usually just reset variables)
+# Functionality Description:
+# This script processes wind speed data from CSV files exported from HOBO loggers.
+# It handles user inputs, file management, and renaming exports based on specific formats.
 
-# Initialize Tkinter and hide the root window
-root = Tk()
-root.withdraw()  # Hide the root window
+# Clear the workspace (not necessary in Python but included for clarity)
+# This will be done automatically when the script ends.
 
 ########################### START USER INPUT ###########################
 # Enter site name
-site_name = "CARE001"
+site_name = "CARE003"
 # Enter deployment start date
-deploy = "20241008"
+deploy = "20241009"
 ############################# END USER INPUT ##########################
 
-# List of required packages
-packages = [
-    "pandas", "numpy"
+# List of required packages (ensure you have these installed)
+required_packages = [
+    'pandas',
+    'tkinter',  # Included in standard library
 ]
 
-# Check and install required packages
-for pkg in packages:
-    try:
-        __import__(pkg)
-    except ImportError:
-        os.system(f"pip install {pkg}")
+# Function to prompt for the package installation
+def load_packages(packages):
+    for package in packages:
+        try:
+            __import__(package)
+        except ImportError:
+            print(f"Installing package: {package}")
+            import pip
+            pip.main(['install', package])
+
+load_packages(required_packages)
 
 ############## START PROCESS #############################
 
-# Import template dataset to match headings for incoming datasets
-template = pd.read_csv("headingtemplate.csv", usecols=[0, 1, 2, 3])
-# Remove all data from the template (keeping only the header)
-template = template.iloc[0:0]  # Empty DataFrame with the same columns as template
+# Initialize the Tkinter root
+root = tk.Tk()
+root.withdraw()  # Hide the root window
 
 # Choose files; only .csv from all HOBO exports for a given site/deployment
-# Ensure the date/time format is: '%m/%d/%Y %H:%M:%S'
-files = filedialog.askopenfilenames(title="Select HOBO CSV files", filetypes=[("CSV files", "*.csv")])
+files = filedialog.askopenfilenames(title="Choose HOBO CSV files", filetypes=[("CSV Files", "*.csv")])
 
-# Read the files with a comma separator
-data_frames = [pd.read_csv(file, usecols=[0, 1, 2, 3], skiprows=1) for file in files]
+# Read the files, assuming comma as the separator
+data_frames = []
+for file in files:
+    df = pd.read_csv(file, usecols=[0, 1, 2, 3], skiprows=1, header=None)
+    data_frames.append(df)
+
+# Concatenate all data into a single DataFrame
 data = pd.concat(data_frames, ignore_index=True)
 
-# Replace column headings with those from template
-data.columns = template.columns
+# Extract time zone from the file name
+tzhobo = os.path.basename(files[0]).split('(')[-1].split(')')[0][5:8]  # Extract time zone
 
-# RENAME COMBINED DATA SET
-# Format: NEW: SERIALNUMBER YYYYDDMMHHmmss.csv
-file_name = os.path.basename(files[-1])  # Get the last file's name
-serial_number = file_name[:8]  # Extract the serial number
+# Rename column headings
+data.columns = [
+    "#",
+    f"Date-Time ({tzhobo})",
+    "Ch:1 - WindSpd - Speed  (m_s)",
+    "Ch:1 - WindSpd - SpeedMax : Max (m_s)"
+]
 
-# Retrieve last date
-date = data['Date-Time (PDT)'].iloc[-1]  # Assuming the column name is 'Date-Time (PDT)'
-date = pd.to_datetime(date, format='%m/%d/%Y %H:%M:%S')
+# Extract serial number from the last file name
+file_name = os.path.basename(files[-1])
+serial_number = file_name[:8]
 
-# Remove colons for the filename
-formatted_date = date.strftime('%Y%m%d %H%M%S').replace(":", "")
+# Extract the last date from the DataFrame for file naming
+last_date = data.iloc[-1, 1]  # Assuming the date is in the second column
+date = datetime.strptime(last_date, '%m/%d/%Y %H:%M:%S')
+formatted_date = date.strftime('%Y%m%d%H%M%S')  # Format date as 'YYYYMMDDHHMMSS'
 fname = f"{serial_number} {formatted_date}.csv"
 
 # Create full path for the output directory
 full_path = os.path.join(os.getcwd(), f"{site_name}_{deploy}")
-os.makedirs(full_path, exist_ok=True)
+os.makedirs(full_path, exist_ok=True)  # Create directory if it doesn't exist
 
-# Export combined data to CSV in the specified project folder
-data.to_csv(os.path.join(full_path, fname), index=False, quoting=1)
+# Export combined data to CSV; will be placed in the specified project folder
+data.to_csv(os.path.join(full_path, fname), index=False, header=True)
 
 # Print confirmation message about the exported file
 print(f"Data has been exported to: {os.path.join(full_path, fname)}")

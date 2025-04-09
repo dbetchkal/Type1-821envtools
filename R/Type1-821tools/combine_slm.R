@@ -3,9 +3,9 @@ rm(list = ls())
 
 ################ START USER INPUT ##################
 # Enter site name for file prefix
-sitename <- "YOSE013"
+sitename <- "CARE004"
 # Enter deployment start date
-deploy <- "20240618"
+deploy <- "20241009"
 ######### END USER INPUT ###################################
 
 # List of required packages

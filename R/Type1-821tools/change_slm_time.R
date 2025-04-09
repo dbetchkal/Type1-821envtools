@@ -1,4 +1,21 @@
 rm(list=ls())
+
+################ START USER INPUT ##################
+# Enter site name for file prefix
+sitename <- "CARE004"
+# Enter deployment start date
+deploy <- "20241009"
+# Enter hours to change clock forward or backward
+hrs <- 1
+# Enter direct, + or -
+direction <- "+"
+
+######### END USER INPUT ###################################
+
+
+
+
+
 packages = c("EnvStats", "reshape2",
              "ggplot2", "ggthemes",
              "pander", "dplyr",
@@ -17,26 +34,74 @@ package.check <- lapply(
     }
   }
 )
-dlfile <- choose.files()
-#create dataframe
-dldata<-read_delim(file=dlfile, delim = ",",col_names=TRUE)
 
 
 ##Navigate to the SLM files needing time change
+#notadjusted
 Files <- choose.files()
 #create dataframe
 data<-read_delim(file=Files, delim = ",",col_names=TRUE)
 #  hours to change. Input the number of hours to change
-hrs <- hours(0) 
+hrs <- hours(hrs) 
 
 #Change the operator in the following folder to + or - depending on the time change direction
-# getting current time field and pasting over it by adding or subracting the hour
-data$`              Date/Time              ` <- as_datetime(data$`              Date/Time              `) + hrs #change operator to add/subract
-data$`              Date/Time              ` <- as.character.Date(data$`              Date/Time              `)
+# getting current time field and pasting over it by adding or subtracting the hour
+data$`              Date/Time              ` <- do.call(direction,list(as_datetime(data$`              Date/Time              `), hrs)) 
+# ensure that the hour is formatted with single digit (without the zero in single digit hours)
+data$`              Date/Time              ` <- gsub("(^[0-9]{4}-[0-9]{2}-[0-9]{2}) (0?)([0-9]{1}):", "\\1 \\3:", 
+                                                           format(data$`              Date/Time              `, "%Y-%m-%d %H:%M:%S"))
+
+
+
+
+# Add space after the 10th character in the date/time field
+data$`              Date/Time              ` <- paste0(substr(data$`              Date/Time              `, 1, 10), " ", 
+                   substr(data$`              Date/Time              `, 11, 
+                          nchar(data$`              Date/Time              `)))
+
+
+
+# Store the first date/time value
+oldvalue <- data[1, 2]
+print(oldvalue)  # Print for verification
+
+# Determine the length of the old date/time string
+oldvalue_datelength <- nchar(oldvalue)
+print(oldvalue_datelength)
+
+# Get the number of files
+file_num <- length(Files)
+
+# Store temporary new value if needed
+newvalue <- paste0(substr(oldvalue, 1, 10), "  0:00:00")
+nchar(newvalue)  # Print character length to confirm
+
+# Check if the date needs to be changed
+datechange <- ifelse(oldvalue_datelength == 20, "Y", "N")
+
+
+
+# Update the date if needed
+if (datechange == "Y") {
+  data[1, 2] <- newvalue
+}
+
 #get original file name
 file=basename(Files)
 
-#Export csv. Will be placed into the R Project folder and can be moved to the 
-#SPL folder
-write.csv(data, file,row.names=FALSE)
-?write.csv()
+full_path <- file.path(getwd(), paste0(sitename,"_",deploy))
+
+dir.create(full_path, recursive = TRUE)
+
+
+
+# Write the data to a CSV file
+write.csv(data, file.path(full_path, file), row.names = FALSE, quote = FALSE)
+
+
+
+
+
+
+
+

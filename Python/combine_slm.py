@@ -11,9 +11,9 @@ root.withdraw()  # Hide the root window
 
 ################ START USER INPUT ##################
 # Enter site name for file prefix
-sitename = "YOSE013"
+sitename = "CARE003"
 # Enter deployment start date
-deploy = "20240618"
+deploy = "20241009"
 ######### END USER INPUT ###################################
 
 # Assuming the deployment produces files with specific suffixes
