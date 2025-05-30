@@ -12,15 +12,15 @@ import os
 # The script can handle up to three data gaps during a standard 30-day monitoring period.
 
 ############################# START USER INPUT #######################
-site_name = "YOSE013"
-deploy = "20240618"
+site_name = "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (YOSE013)
+deploy = "your_deployment_date" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20240618)
 
 # Missing data input
-sdate1 = "6/28/2024 11:31:23"  # Start date
-edate1 = "7/9/2024 9:36:28"    # End date
+sdate1 = ""  # Start date
+edate1 = ""    # End date
 
-sdate2 = "7/9/2024 4:19:08"     # Start date
-edate2 = "7/16/2024 10:14:07"   # End date
+sdate2 = ""     # Start date
+edate2 = ""   # End date
 
 sdate3 = ""                     # Start date (input if applicable)
 edate3 = ""                     # End date (input if applicable)
@@ -38,10 +38,10 @@ gap2 = create_gap(sdate2, edate2)
 gap3 = create_gap(sdate3, edate3) if sdate3 and edate3 else pd.DataFrame()
 
 # Choose files (mocking interaction for automation)
-# Files = choose.files() would be replaced with a specific file listing in Python.
+Files = choose.files() # would be replaced with a specific file listing in Python.
 # For example:
 import glob
-Files = glob.glob("*.csv")  # Assuming .csv files in the current directory.
+# Files = glob.glob("*.csv")  # Assuming .csv files in the current directory.
 
 # Read wind data into a single dataframe
 wind_files_df = [pd.read_csv(file, usecols=[0, 1, 2, 3], skiprows=1) for file in Files]

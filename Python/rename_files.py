@@ -1,15 +1,16 @@
 import os
 import tkinter as tk
 from tkinter import filedialog
-
+################ START USER INPUT ##################
 # Set site parameters
 # Incorrect site
-site_from = "CARE010"
+site_from = "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE010)
 # Correct site
-site_to = "CARE001"
+site_to = "your_deployment_date" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE001)
 
 # Specify the file type to change (.txt, .wav, etc.)
 filetype = ".txt"  # Extension to look for
+######### END USER INPUT ###################################
 
 # Function to choose a directory
 def choose_directory():

@@ -1,0 +1,13 @@
+Log created on:
+05/30/2025 11:35:30
+
+
+Created by:
+
+
+
+Values in max wind column (column 4) were replaced with values from the 5 second average (column 3).
+This indicates that non-numeric values were in the max wind speed column and likely presenting as NAs, which can happen during a deployment
+where max wind was not configured. Please note that this replacement will still have max wind speed in the column heading but
+it will represent the average 5 second wind speed. This will ensure downstream processing of the data set into NVSPL, metrics, and plotting in
+the Acoustic Monitoring Toolbox. Any reporting of this dataset should clarify that max wind speeds were replaced with the average wind speeds.

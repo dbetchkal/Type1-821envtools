@@ -1,11 +1,16 @@
+
+################ START USER INPUT ##################
 # Set site parameters
 # Incorrect name
-site_from <- "CARE010"
+site_from <- "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE010)
 # Correct name
-site_to <- "CARE001"
+site_to <- "your_deployment_date" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE001)
 
 # Specify the file type to change (.wav, .jpeg, .pdf, etc.)
 filetype <- "\\.txt$"  # Adjusted pattern to ensure it matches file extension
+
+######### END USER INPUT ###################################
+
 
 # Function to choose a directory
 choose_directory <- function() {

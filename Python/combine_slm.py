@@ -11,9 +11,10 @@ root.withdraw()  # Hide the root window
 
 ################ START USER INPUT ##################
 # Enter site name for file prefix
-sitename = "CARE003"
+sitename = "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (YOSE013)
 # Enter deployment start date
-deploy = "20241009"
+deploy = "your_deployment_date" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20240618)
+
 ######### END USER INPUT ###################################
 
 # Assuming the deployment produces files with specific suffixes

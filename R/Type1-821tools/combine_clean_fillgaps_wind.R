@@ -7,9 +7,10 @@ rm(list = ls())
 # The script can handle up to three data gaps during a standard 30-day monitoring period.
 
 ############################# START USER INPUT #######################
-# Enter site name and deployment start date
-site_name <- "YOSE013"
-deploy <- "20240618"
+# Enter site name
+site_name <- "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (YOSE013)
+# Enter deployment start date
+deploy <- "your_deployment_date" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20240618)
 
 
 # Missing data input
@@ -17,18 +18,18 @@ deploy <- "20240618"
 # The date/time ranges of the SLM and final met output must be the same
 
 # First data gap; USER input start and end times of data gap
-sdate1 <- "6/28/2024  11:31:23"  # Start date-add 5 seconds to last sample in first fragmented record
-edate1 <- "7/9/2024  9:36:28"     # End date-subtract 5 seconds from the next measured wind sample if there are two files 
+sdate1 <- " "  # Start date-add 5 seconds to last sample in first fragmented record
+edate1 <- " "     # End date-subtract 5 seconds from the next measured wind sample if there are two files 
                                   # or enter the last time step of the last slm record for this deployment
 
 # Second data gap ("" if only one gap)
-sdate2 <- "7/9/2024  4:19:08"    # Start date-add 5 seconds to last sample in the second fragmented record
-edate2 <- "7/16/2024  10:14:07"   # End date-subtract 5 seconds from the next measured wind sample if there are three files 
+sdate2 <- " "    # Start date-add 5 seconds to last sample in the second fragmented record
+edate2 <- " "   # End date-subtract 5 seconds from the next measured wind sample if there are three files 
                                   # or enter the last time step of the last slm record for this deployment 
 
 # Third data gap ("" if only two gaps)
-sdate3 <- ""                      # Start date -add 5 seconds to last sample in the second fragmented record
-edate3 <- ""                      # End date-enter the last timestep of the last slm record for this deployment
+sdate3 <- " "                      # Start date -add 5 seconds to last sample in the second fragmented record
+edate3 <- " "                      # End date-enter the last timestep of the last slm record for this deployment
 
 ############## END USER INPUT ############################################################
 
@@ -85,7 +86,7 @@ names(data)[4] <- "Ch:1 - WindSpd - SpeedMax : Max (m_s)"
 
 
 # Create a numeric date/time field for sorting later
-data <- data %>% mutate(sort = as.numeric(mdy_hms(`Date-Time (PDT)`, tz = "America/Los_Angeles")))
+data <- data %>% mutate(sort = as.numeric(mdy_hms(data[[2]], tz = "America/Los_Angeles")))
 
 # Combine all gap data into a single dataframe
 gapdata <- rbind(
@@ -110,10 +111,10 @@ names(gapdata)[3] <- "Ch:1 - WindSpd - Speed  (m_s)"
 names(gapdata)[4] <- "Ch:1 - WindSpd - SpeedMax : Max (m_s)"
 # Create a numeric date/time field for sorting combined data frames later
 gapdata <- gapdata %>%
-  mutate(sort = as.numeric(`Date-Time (PDT)`))
+  mutate(sort = as.numeric(gapdata[[2]]))
 
 # Reformat date/time field to match real data from HOBO loggers
-gapdata$`Date-Time (PDT)` <- format(gapdata$`Date-Time (PDT)`, '%m/%d/%Y %H:%M:%S', tz = "America/Los_Angeles")
+gapdata[[2]] <- format(gapdata[[2]], '%m/%d/%Y %H:%M:%S', tz = "America/Los_Angeles")
 
 #### CREATE and EXPORT LOG OF GAP DATES
 
@@ -164,7 +165,7 @@ data$`Ch:1 - WindSpd - SpeedMax : Max (m_s)` <- as.numeric(as.character(data$`Ch
 # RENAME COMBINED DATA SET
 file <- basename(tail(Files, n = 1))
 sn <- substr(file, 1, 8)
-date <- tail(data$`Date-Time (PDT)`, n = 1)
+date <- tail(data[[2]], n = 1)
 date <- mdy_hms(date)
 formatted_date <- gsub(':', '', as.character(date))
 fname <- paste(sn," ", formatted_date, ".csv", sep = "")

@@ -1,10 +1,10 @@
 rm(list=ls())
 
 ################ START USER INPUT ##################
-# Enter site name for file prefix
-sitename <- "CARE004"
+# Enter site name
+sitename <- "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE004)
 # Enter deployment start date
-deploy <- "20241009"
+deploy <- "your_deployment_date" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20241009)
 # Enter hours to change clock forward or backward
 hrs <- 1
 # Enter direct, + or -

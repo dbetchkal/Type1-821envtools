@@ -2,10 +2,10 @@
 rm(list = ls())
 
 ################ START USER INPUT ##################
-# Enter site name for file prefix
-sitename <- "CARE004"
+# Enter site name
+site_name <- "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (YOSE013)
 # Enter deployment start date
-deploy <- "20241009"
+deploy <- "your_deployment_date" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20240618)
 ######### END USER INPUT ###################################
 
 # List of required packages
