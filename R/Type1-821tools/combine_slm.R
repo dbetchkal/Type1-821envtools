@@ -65,12 +65,12 @@ if (datechange == "Y") {
 }
 
 
-full_path <- file.path(getwd(), paste0(sitename,"_",deploy))
+full_path <- file.path(getwd(), paste0(site_name,"_",deploy))
 
 dir.create(full_path, recursive = TRUE)
 
 # Create the final file path name
-fullname <- paste0(sitename, "_", fname)
+fullname <- paste0(site_name, "_", fname)
 
 # Write the data to a CSV file
 write.csv(data, file.path(full_path, fullname), row.names = FALSE, quote = FALSE)

@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 from tkinter import filedialog, Tk
 import numpy as np
+import csv
 
 # Clear the workspace (in Python, we usually just reset variables)
 # Tkinter is used to create a file selection dialog
@@ -11,9 +12,9 @@ root.withdraw()  # Hide the root window
 
 ################ START USER INPUT ##################
 # Enter site name for file prefix
-sitename = "your_site_code" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (YOSE013)
+sitename = "DENACATH" # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (YOSE013)
 # Enter deployment start date
-deploy = "your_deployment_date" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20240618)
+deploy = "20250821" # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20240618)
 
 ######### END USER INPUT ###################################
 
@@ -60,6 +61,7 @@ os.makedirs(full_path, exist_ok=True)
 fullname = f"{sitename}_{fname}"
 
 # Write the data to a CSV file
-data.to_csv(os.path.join(full_path, fullname), index=False, quoting=1)
+
+data.to_csv(os.path.join(full_path, fullname), index=False, quoting=csv.QUOTE_NONE, escapechar='\\')
 
 print(f"Data has been written to: {os.path.join(full_path, fullname)}")

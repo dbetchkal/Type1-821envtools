@@ -10,9 +10,9 @@ import csv  # Import csv module
 
 ########################### START USER INPUT ###########################
 # Enter site name
-site_name = "your_site_code"  # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE001)
+site_name = "DENACATH"  # Typically four letter park code and 3 digit numeric code. Sample dataset ex. (CARE001)
 # Enter deployment start date
-deploy = "your_deployment_date"  # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20241008)
+deploy = "20250821"  # Typically 8 digits representing the day of deployment in YYYYMMDD. Sample dataset ex. (20241008)
 ############################# END USER INPUT ##########################
 
 # Create full path for the output directory
@@ -94,7 +94,7 @@ formatted_date = date.strftime("%Y-%m-%d %H%M%S").replace(":", "")  # Formatting
 fname = f"{serial_number} {formatted_date}.csv"
 
 # Export combined data to CSV; will be placed in the specified project folder
-data.to_csv(os.path.join(full_path, fname), index=False, quoting=csv.QUOTE_NONNUMERIC)
+data.to_csv(os.path.join(full_path, fname), index=False, quoting=csv.QUOTE_NONE)
 
 # Print confirmation message about the exported file
 print(f"Data has been exported to: {os.path.join(full_path, fname)}")

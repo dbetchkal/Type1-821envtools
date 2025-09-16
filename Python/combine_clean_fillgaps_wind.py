@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import os
+import csv
 
 # Clear workspace
 # Not directly applicable in Python
@@ -118,4 +119,4 @@ formatted_date = date.strftime("%Y%m%d%H%M%S")
 fname = f"{sn} {formatted_date}.csv"
 
 # Export combined data to CSV
-data.to_csv(os.path.join(full_path, fname), index=False, quoting=1)
+data.to_csv(os.path.join(full_path, fname), index=False, quoting=csv.QUOTE_NONE, escapechar='\\')
